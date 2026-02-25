@@ -2,11 +2,12 @@ import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 export default defineNuxtConfig({
   devtools: { enabled: false },
   ssr: false,
-  compatibilityDate: "2024-04-03",
+
+  compatibilityDate: "2026-02-25",
 
   app: {
     head: {
-      title: "Nuxt3-Starter-Template",
+      title: "Nuxt-Start + Vuetify Template",
     },
   },
 
@@ -33,7 +34,6 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@vueuse/nuxt",
     "dayjs-nuxt",
-    "nuxt-lodash",
   ],
 
   dayjs: {
