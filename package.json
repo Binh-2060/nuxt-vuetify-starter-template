@@ -16,7 +16,7 @@
     "@vueuse/nuxt": "^13.6.0",
     "axios": "^1.11.0",
     "numeral": "^2.0.6",
-    "nuxt": "3.18.1",
+    "nuxt": "4.3.1",
     "pinia": "^3.0.3",
     "sweetalert2": "^11.22.3",
     "vue": "latest",
@@ -25,7 +25,6 @@
   "devDependencies": {
     "@types/numeral": "^2.0.5",
     "dayjs-nuxt": "^2.1.11",
-    "nuxt-lodash": "^2.5.3",
     "sass": "^1.90.0",
     "vite-plugin-vuetify": "^2.1.2",
     "vuetify": "^3.9.5"
