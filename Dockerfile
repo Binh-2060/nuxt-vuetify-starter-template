@@ -1,4 +1,4 @@
-FROM node:20-alpine3.18 as builder
+FROM node:22-alpine3.24 as builder
 
 WORKDIR /usr/src/app
 
@@ -10,9 +10,9 @@ COPY . .
 
 RUN yarn generate 
 
-FROM nginx:1.26-alpine as production
+FROM nginx:1.30-alpine3.24 as production
 
-COPY --from=builder /usr/src/app/dist /usr/share/nginx/html
+COPY --from=builder /usr/src/app/.output/public /usr/share/nginx/html
 
 COPY ./configs/nginx/nginx.conf /etc/nginx/nginx.conf
 

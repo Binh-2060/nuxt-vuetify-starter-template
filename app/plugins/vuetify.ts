@@ -17,6 +17,7 @@ export default defineNuxtPlugin((app) => {
 
     ssr: true,
     theme: {
+      defaultTheme: "light",
       themes: {
         light: {
           dark: false,

@@ -2,14 +2,15 @@
   font-family: "NotoSansLao";
   font-style: normal;
   font-weight: 400;
-  src: url("/fonts/NotoSansLao-Regular.ttf");
+  src: url("/fonts/NotoSansLao-Regular.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "NotoSansLao-Bold";
+  font-family: "NotoSansLao";
   font-style: normal;
-  font-weight: 700 inherit !important;
-  src: url("/fonts/NotoSansLao-Bold.ttf");
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/NotoSansLao-Bold.ttf") format("truetype");
 }
 
 $navigation-drawer-border-width: 0;
