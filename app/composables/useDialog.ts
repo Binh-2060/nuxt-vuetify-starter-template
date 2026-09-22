@@ -124,7 +124,6 @@ export const useDialog = () => {
     } catch (err) {
       let message = "";
       if (err instanceof ApiError) {
-        console.log("on this case");
         message = `[${err.code ?? ""}] ${err.message}`;
       } else if (err instanceof Error) {
         message = err.message;

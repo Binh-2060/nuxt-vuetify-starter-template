@@ -2,7 +2,9 @@
   <div>
     <label :style="{ fontSize: '14px', fontWeight: 600 }" v-if="label">
       {{ label }}
-      <span v-if="rules && rules?.length > 0" class="text-red">*</span>
+      <span v-if="!optional && rules && rules?.length > 0" class="text-red"
+        >*</span
+      >
     </label>
     <v-text-field
       v-model="model"
@@ -22,6 +24,7 @@ defineProps<{
   label: string;
   placeholder?: string;
   rules?: ((v: string) => true | string)[];
+  optional?: boolean; // hide the required mark when rules are only format checks (e.g. max length)
   density?: null | "default" | "comfortable" | "compact";
   hideDeatails?: "auto" | boolean | undefined;
   readonly?: boolean | null | undefined;
