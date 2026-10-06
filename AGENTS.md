@@ -4,6 +4,8 @@ Follow these rules on every task:
 
 @.ai/rules/00-code-begin.md
 
+**Ask, don't guess.** Before you start work, ask about anything that's unclear: requirements, naming, API fields, UI behavior, where code should go, or a spec that conflicts with the code. Ask all your questions together, up front, and wait for the answers before you edit. Don't fill gaps with assumptions. If something new comes up mid-task, stop and ask again.
+
 API contract (response envelope, pagination): `docs/api/template.md`. Per-feature specs go in `docs/api/<feature>.md`; read the feature's spec before implementing it.
 
 ## Commands
@@ -15,7 +17,6 @@ Package manager is **yarn** (v1, pinned via `packageManager`).
 - `yarn generate` — static build (the production path) → `.output/public`; stamps `BUILD_DATE`. Does **not** type-check.
 - `npx -y -p typescript@5 -p vue-tsc@2 vue-tsc --noEmit -p .nuxt/tsconfig.app.json` — type-check. `vue-tsc` isn't a dependency, so `nuxi typecheck` fails.
 - `yarn build` / `yarn preview` — standard Nuxt build and preview
-- `docker compose up --build` — runs `yarn generate`, then serves `.output/public` via nginx on http://localhost:8080 (SPA fallback in `configs/nginx/nginx.conf`)
 
 No test runner, linter or formatter is configured.
 
