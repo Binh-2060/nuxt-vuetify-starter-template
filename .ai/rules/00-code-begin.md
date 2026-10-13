@@ -28,6 +28,7 @@ Tell the user which branch you're on. Push only that branch (`git push -u origin
   - `fetch` loads from the API (`fetchUserList`). `create` / `update` / `delete` change data on the API (`createUser`, `deleteUser`).
   - `get` returns a value without side effects (`getFullName`). `set` / `reset` / `toggle` change local state (`setFilter`, `resetForm`, `toggleDialog`).
   - `handle` is an event handler in a page or component (`handleSubmit`, `handlePageChange`).
+  - `on` is only for names a component emits (`emit("onPageChange", page)`, as `CustomPagination` does). Don't use it for handler functions, and don't rename existing emits.
   - `build` is for `data/builders` (`buildCreateUserBody`), and `map` is for `data/mappers` (`mapUserList`).
 - Feature files are named `<feature>.ts` in camelCase (`userProfile.ts`), the same in `data/builders`, `data/mappers`, `data/repositories` and every `models/` folder.
 
