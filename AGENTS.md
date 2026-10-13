@@ -7,6 +7,9 @@ Follow these rules on every task:
 @.ai/rules/02-components.md
 @.ai/rules/03-scope.md
 @.ai/rules/04-workflow.md
+@.ai/rules/05-stores.md
+@.ai/rules/06-pages-forms.md
+@.ai/rules/07-styling.md
 
 If your tool doesn't load the `@` lines above, read every file in `.ai/rules/` before you start.
 
