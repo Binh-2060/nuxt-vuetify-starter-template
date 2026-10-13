@@ -45,6 +45,3 @@ Tell the user which branch you're on. Push only that branch (`git push -u origin
   - Composables and stores: `use` + PascalCase (`useDialog`, `useUserStore`).
   - API fields in `models/requestbody` and `models/responsebody` must match the API exactly, even when they're `snake_case` (`per_page`, `list_data`). Convert them to camelCase in `data/builders` and `data/mappers` so views, stores and pages only see camelCase.
   - Keys in `consts/` objects stay `UPPER_SNAKE_CASE` (`rules.VALIDATE`, `rules.MAX_LENGTH`).
-
-# Before finishing
-- No tests or linter are set up. Run `yarn generate` and make sure it builds without errors.

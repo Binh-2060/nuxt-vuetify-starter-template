@@ -4,6 +4,11 @@ Follow these rules on every task:
 
 @.ai/rules/00-code-begin.md
 @.ai/rules/01-api-request.md
+@.ai/rules/02-components.md
+@.ai/rules/03-scope.md
+@.ai/rules/04-workflow.md
+
+If your tool doesn't load the `@` lines above, read every file in `.ai/rules/` before you start.
 
 **Ask, don't guess.** Before you start work, ask about anything that's unclear: requirements, naming, API fields, UI behavior, where code should go, or a spec that conflicts with the code. Ask all your questions together, up front, and wait for the answers before you edit. Don't fill gaps with assumptions. If something new comes up mid-task, stop and ask again.
 
