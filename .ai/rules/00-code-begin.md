@@ -22,7 +22,22 @@ Tell the user which branch you're on. Push only that branch (`git push -u origin
 # Naming
 
 - Functions, variables, parameters, props, store state/actions and object keys you create: **camelCase** (`fetchUserList`, `isLoading`, `totalPage`). Not `snake_case`, `PascalCase` or `kebab-case`.
+- Local constants are camelCase too (`const maxRetry = 3`, `const defaultPageSize = 20`). `UPPER_SNAKE_CASE` is only for keys in `consts/` objects (see exceptions).
 - Booleans read as a yes/no: `is`/`has`/`can`/`should` prefix (`isOpen`, `hasError`).
+- Functions start with a verb that says what they do:
+  - `fetch` loads from the API (`fetchUserList`). `create` / `update` / `delete` change data on the API (`createUser`, `deleteUser`).
+  - `get` returns a value without side effects (`getFullName`). `set` / `reset` / `toggle` change local state (`setFilter`, `resetForm`, `toggleDialog`).
+  - `handle` is an event handler in a page or component (`handleSubmit`, `handlePageChange`).
+  - `build` is for `data/builders` (`buildCreateUserBody`), and `map` is for `data/mappers` (`mapUserList`).
+- Feature files are named `<feature>.ts` in camelCase (`userProfile.ts`), the same in `data/builders`, `data/mappers`, `data/repositories` and every `models/` folder.
+
+| Good | Bad |
+|---|---|
+| `fetchUserList` | `fetch_user_list`, `FetchUserList`, `userList()` |
+| `isLoading`, `hasError` | `loading`, `error_flag`, `IsLoading` |
+| `totalPage`, `const maxRetry = 3` | `total_page`, `const MAX_RETRY = 3` |
+| `handleSubmit` | `submit_handler`, `onSubmitClick` |
+| `data/mappers/userProfile.ts` | `data/mappers/user_profile.ts`, `UserProfile.ts` |
 - Exceptions:
   - `composables/`: the camelCase rule doesn't apply here for now. Keep existing names as they are (e.g. `FormateDate` in `composables/global.ts`) and don't rename them.
   - Types, interfaces and components: `PascalCase` (`UserView`, `CustomButton.vue`).
