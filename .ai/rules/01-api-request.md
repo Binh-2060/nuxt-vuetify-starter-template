@@ -4,15 +4,18 @@ Follow these rules whenever you call the API or backend. Read `docs/api/template
 
 ## Flow
 
-```
-page / component ──▶ store action (stores/) ──builders──▶ repository (data/repositories/) ──▶ apiRequest ──▶ backend
-                          ◀──mappers── response ◀──────────────────────────────────────────────┘
-```
+Every request goes through these steps in order:
 
-- Pages and components call a **store action**. They never call a repository, `apiRequest` or `api` directly.
-- The store action builds the request body with a **builder**, calls the **repository**, maps the response with a **mapper**, and updates state.
-- Repositories only send the request through `apiRequest<T>()` and return its result. They hold no state, UI or mapping logic.
-- Never call `$fetch`, `useFetch` or `api` from `utils/api.ts` directly. Always go through `apiRequest`.
+1. A page or component calls a **store action** in `stores/`.
+2. The store action converts its view data into a request body with a **builder** (`data/builders`).
+3. The store action calls a **repository** (`data/repositories`), which sends the request through `apiRequest<T>()`.
+4. The store action converts the response into view data with a **mapper** (`data/mappers`), updates state, and returns the result.
+
+Rules for each step:
+
+- Pages and components only talk to stores, never to repositories.
+- Only repositories send requests, and only through `apiRequest<T>()`. Nothing else calls `apiRequest`, `api` from `utils/api.ts`, `$fetch` or `useFetch`.
+- Repositories only call `apiRequest<T>()` and return its result. They hold no state, UI or mapping logic.
 
 ## Types and files
 
