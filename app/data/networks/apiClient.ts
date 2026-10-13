@@ -46,7 +46,7 @@ export async function apiRequest<T>(
 
     if (res.status !== 1) {
       throw new ApiError(
-        400,
+        0,
         "API_ERROR",
         res.error ?? "Unknown error",
         res.timestamp,

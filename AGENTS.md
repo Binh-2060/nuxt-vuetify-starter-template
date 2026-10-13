@@ -3,6 +3,7 @@
 Follow these rules on every task:
 
 @.ai/rules/00-code-begin.md
+@.ai/rules/01-api-request.md
 
 **Ask, don't guess.** Before you start work, ask about anything that's unclear: requirements, naming, API fields, UI behavior, where code should go, or a spec that conflicts with the code. Ask all your questions together, up front, and wait for the answers before you edit. Don't fill gaps with assumptions. If something new comes up mid-task, stop and ask again.
 
@@ -26,15 +27,7 @@ Nuxt 4 + Vuetify 4 + Pinia. Source lives in `app/`; `@/` and `~/` point to it. I
 
 ### Request flow
 
-```
-page / component ──▶ store action (stores/) ──builders──▶ repository (data/repositories/) ──▶ apiRequest ──▶ backend
-                          ◀──mappers── response ◀──────────────────────────────────────────────┘
-```
-
-- Types per layer: `models/views` (UI and forms), `models/requestbody` (sent), `models/responsebody` (received). `data/builders` converts view → request, and `data/mappers` converts response → view.
-- `data/` and `models/` are scaffolds: each `index.ts` only has a comment. Feature code goes in `<feature>.ts` files next to it.
-- `utils/api.ts` is a `$fetch.create` instance (60s timeout). `baseURL` is set per request from `getEnvConfig()` in `configs/env.ts`, keyed by `VITE_APP_ENV` (`local` / `develop` / `production`, falls back to `develop`). Every `apiBaseUrl` there is currently `""`.
-- `data/networks/apiClient.ts`: `apiRequest<T>()` unwraps `{ timestamp, status, items, error }` and returns `{ data, timestamp }`. `status !== 1` is a failure. Every failure is thrown as `ApiError` (`status`, `code`, `timestamp`) with code `API_ERROR` (status 0), the HTTP status (e.g. `"500"`), `OFFLINE` or `TIMEOUT`. Lists use `apiRequest<Paginated<Item>>()`; `pagination` fields are `-1` when the endpoint doesn't paginate. If a feature spec's field names differ from `Paginated` (e.g. snake_case), follow the spec and ask.
+See `.ai/rules/01-api-request.md`.
 
 ### Dialog and errors
 
