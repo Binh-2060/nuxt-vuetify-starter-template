@@ -5,7 +5,17 @@ Never commit or push to `main` or `develop`.
 Before the first edit of every task, run `git branch --show-current`. If it is `main` or `develop`, don't ask — move off it first:
 
 - Branch for this task exists → `git switch <branch>`
-- Otherwise → `git pull && git switch -c <type>/<task-name>` (`feature` / `fix` / `chore`, lowercase-dashed, e.g. `feature/user-login`). Uncommitted edits move with it.
+- Otherwise → `git pull && git switch -c <type>/<task-name>` (lowercase-dashed, e.g. `feature/user-login`). Uncommitted edits move with it.
+
+Pick `<type>` from the branch you're on and the kind of task:
+
+| Current branch | Task | `<type>` |
+|---|---|---|
+| `main` | Urgent production fix | `hotfix` |
+| `develop` | New feature or change | `feature` |
+| `main` or `develop` | Maintenance: deps, config, docs, tooling, refactor with no behavior change | `chore` |
+
+The PR goes back into the branch you started from (`hotfix/*` and `chore/*` from `main` → `main`; `feature/*` and `chore/*` from `develop` → `develop`).
 
 Tell the user which branch you're on. Push only that branch (`git push -u origin <branch>`); changes reach `main` / `develop` via PR only. No force-push or local merge into them.
 
