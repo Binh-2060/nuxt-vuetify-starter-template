@@ -5,7 +5,7 @@ Follow these rules when you build or change UI in pages and components.
 ## Check before you build
 
 - Before you write new UI, look in `components/global/` and `components/` for something that already does the job. Use it, or extend it with a prop or slot, instead of writing a near-copy.
-- Read a `Global*` component's props before using it. Some names are quirky (see AGENTS.md).
+- Read a `Global*` component's props before using it. Some names are quirky: `CustomTextField` has `hideDeatails`, plus `optional` to hide the required `*` that any `rules` would show. `CustomPagination` takes `totalpage` and emits `onPageChange`.
 
 ## When to extract
 

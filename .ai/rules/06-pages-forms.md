@@ -18,9 +18,14 @@
 - Show an empty state when a list is empty after loading. Ask for its text if the task doesn't give it.
 - Errors: wrap user actions in `catchError`. For background loads you can skip it (see `01-api-request.md`).
 
+## Dialogs
+
+- `useDialog()` has a SweetAlert2-style API: `fire`, `confirm`, `success`, `error`, `warning`, `info`, `prompt`. Every call resolves to `{ isConfirmed, value? }`. Its state is a module-level singleton, rendered once by `<GlobalAppDialog />` in `app.vue`, so don't add another dialog host.
+- `catchError(fn, title?)` shows an error dialog (`[code] message` for `ApiError`, default title `ຜິດພາດ`) and returns `null`. It also returns `null` when `fn` resolves to nothing, so make `fn` return a value (e.g. `true`) when you need to tell success from failure.
+
 ## Forms
 
-- Build fields from the `Global*` components (`GlobalCustomTextField`, `GlobalCustomSelection`, `GlobalCustomAutoComplete`, `GlobalCustomDatePicker`, `GlobalCustomButton`). Read their props first; some names are quirky.
+- Build fields from the `Global*` components (`GlobalCustomTextField`, `GlobalCustomSelection`, `GlobalCustomAutoComplete`, `GlobalCustomDatePicker`, `GlobalCustomButton`). Read their props first; some names are quirky (see `02-components.md`).
 - Use the shared rules from `consts/rules.ts` (`rules.VALIDATE`, `rules.MAX_LENGTH(n)`). If you need a new shared rule, ask before adding it to `consts/rules.ts` (see `03-scope.md`). A rule only one form uses can stay in that form.
 - Hold form values in one `ref` typed with a view form type from `models/views` (`ref<UserForm>({ ... })`).
 - Wrap fields in `<v-form ref="formRef">` and run `await formRef.value?.validate()` before you call the store. Stop if it isn't valid.

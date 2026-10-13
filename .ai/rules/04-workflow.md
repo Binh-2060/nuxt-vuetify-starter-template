@@ -5,7 +5,7 @@ Work through every task in this order.
 ## 1. Before you edit
 
 1. Check the branch (see branch rules in `00-code-begin.md`).
-2. Read the task, the related `docs/api/<feature>.md` spec, and the code you'll change.
+2. Read the task, the related `docs/api/<feature>.md` spec, the code you'll change, and the topic rules `AGENTS.md` lists for those areas.
 3. Ask every unclear question together, and wait for the answers.
 
 ## 2. While you work
@@ -16,7 +16,7 @@ Work through every task in this order.
 ## 3. Before you finish
 
 1. Run `yarn generate` and make sure it builds without errors.
-2. If you changed `.ts` or `.vue` files, also run the type-check: `npx -y -p typescript@5 -p vue-tsc@2 vue-tsc --noEmit -p .nuxt/tsconfig.app.json`. Fix errors in code you touched. List errors in other code under **Out of scope**.
+2. If you changed `.ts` or `.vue` files, also run the type-check command from `AGENTS.md`. Fix errors in code you touched. List errors in other code under **Out of scope**.
 3. If you only changed Markdown, you can skip both. Say that you skipped them.
 
 No tests or linter are set up, so don't claim anything is tested.
