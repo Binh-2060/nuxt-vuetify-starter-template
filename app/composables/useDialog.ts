@@ -1,4 +1,5 @@
-import { ApiError } from "@/data/networks/apiClient";
+import { getErrorMessage } from "@/core/apiError";
+import messages from "@/consts/messages";
 
 // composables/useDialog.ts
 interface DialogOptions {
@@ -117,20 +118,12 @@ export const useDialog = () => {
 
   const catchError = async <T>(
     fn: () => Promise<T>,
-    title = "ຜິດພາດ",
+    title = messages.ERROR_TITLE,
   ): Promise<T | null> => {
     try {
       return await fn();
     } catch (err) {
-      let message = "";
-      if (err instanceof ApiError) {
-        message = `[${err.code ?? ""}] ${err.message}`;
-      } else if (err instanceof Error) {
-        message = err.message;
-      } else {
-        message = "Something went wrongs";
-      }
-      await error(title, message);
+      await error(title, getErrorMessage(err));
       return null;
     }
   };

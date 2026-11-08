@@ -22,8 +22,8 @@ Tell the user which branch you're on. Push only that branch (`git push -u origin
   - `on` only for event names a component emits (`emit("onPageChange", page)`). Don't rename existing emits.
   - `build` in `data/builders` (`buildCreateUserBody`), `map` in `data/mappers` (`mapUserList`).
 - Exceptions:
-  - PascalCase for types, interfaces and components (`UserView`, `CustomButton.vue`).
+  - PascalCase for types, interfaces and components (`User`, `CustomButton.vue`).
   - `use` + PascalCase for composables and stores (`useDialog`, `useUserStore`).
   - `composables/`: keep existing names (e.g. `FormateDate`). Don't rename them.
-  - Fields in `models/requestbody` and `models/responsebody` match the API exactly, even when `snake_case` (`per_page`). Builders and mappers convert them, so views, stores and pages only see camelCase.
+  - Fields in `models/requestbody` and `models/responsebody` match the API exactly, even when `snake_case` (`per_page`). Builders and mappers convert them, so entities, forms, stores and pages only see camelCase.
   - Keys in `consts/` objects: `UPPER_SNAKE_CASE` (`rules.VALIDATE`).

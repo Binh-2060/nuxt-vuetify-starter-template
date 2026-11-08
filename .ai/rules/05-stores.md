@@ -5,12 +5,12 @@ Pinia stores live in `app/stores/` and are auto-imported.
 ## Structure
 
 - One store per feature: `stores/<feature>.ts` exporting `use<Feature>Store` (`stores/user.ts` → `useUserStore`). The store id is the feature name in camelCase (`defineStore("user", ...)`).
-- Use the **options syntax** only, like `app/stores/example.ts`: `defineStore("user", { state() { ... }, actions: { ... } })`. Not setup stores (`defineStore("user", () => { ... })`).
+- Use the **options syntax** only, like the [Example](#example) below: `defineStore("user", { state() { ... }, actions: { ... } })`. Not setup stores (`defineStore("user", () => { ... })`).
 - Inside the store:
   - `state()` is a method that returns every state field with its initial value.
   - Derived values go in `getters`, written as `(state) => ...` (`hasUserList: (state) => state.userList.length > 0`). Leave `getters` out when there are none.
   - Actions go in `actions`, written as methods (`async fetchUserList(page: number) { ... }`), not arrow functions, so `this` is the store. Read and change state through `this` (`this.isLoading = true`).
-- Type state with view types from `models/views` (`userList: [] as UserView[]`). Stores never hold request or response body types.
+- Type state with entity types from `models/entities` (`userList: [] as User[]`). Actions that send data take form types from `models/forms` (`createUser(form: UserForm)`). Stores never hold request or response body types.
 
 ## Actions
 
@@ -39,12 +39,13 @@ Pinia stores live in `app/stores/` and are auto-imported.
 import * as userRepository from "@/data/repositories/user";
 import { buildCreateUserBody } from "@/data/builders/user";
 import { mapUserList } from "@/data/mappers/user";
-import type { UserForm, UserView } from "@/models/views/user";
+import type { User } from "@/models/entities/user";
+import type { UserForm } from "@/models/forms/user";
 
 export const useUserStore = defineStore("user", {
   state() {
     return {
-      userList: [] as UserView[],
+      userList: [] as User[],
       totalPage: 0,
       isLoading: false,
       isSubmitting: false,
@@ -56,8 +57,9 @@ export const useUserStore = defineStore("user", {
       this.isLoading = true;
       try {
         const { data } = await userRepository.fetchUserList(page);
-        this.userList = mapUserList(data.listData);
-        this.totalPage = data.pagination.totalPage;
+        const userList = mapUserList(data); // response shape from models/responsebody/user.ts
+        this.userList = userList.items;
+        this.totalPage = userList.totalPage;
         return this.userList;
       } finally {
         this.isLoading = false;
