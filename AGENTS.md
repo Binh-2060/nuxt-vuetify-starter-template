@@ -36,8 +36,12 @@ Nuxt 4 + Vuetify 4 + Pinia. Source lives in `app/`. `@/` and `~/` point to it. I
 
 | Auto-imported | Needs `import ... from "@/..."` |
 |---|---|
-| `components/*` (no prefix), `components/global/*` (**`Global` prefix**: `CustomButton.vue` → `<GlobalCustomButton>`), top-level `composables/*` and `utils/*`, `stores/*`, Vuetify components, VueUse | `data/`, `models/`, `consts/`, `configs/` |
+| `components/*` (no prefix), `components/global/*` (**`Global` prefix**: `CustomButton.vue` → `<GlobalCustomButton>`), top-level `composables/*` and `utils/*`, `stores/*`, Vuetify components, VueUse | `core/`, `data/`, `models/`, `consts/`, `configs/` |
 
-- `composables/global.ts`: `goPath`, `reloadPath`, `delayGoPath`, `goBack`, `FormateDate`, `formatNumber`.
+- `composables/global.ts`: `goPath`, `reloadPath`, `delayGoPath`, `goBack`, `FormateDate` (need Nuxt, router or `window`).
+- `utils/format.ts`: `formatNumber`. Put pure helpers (no Nuxt, router or `window`) in `utils/`.
+- `core/apiError.ts`: `ApiError` and `getErrorMessage` (error → user text, used by `catchError`). `composables/` and `data/` import it from `core/`, never from each other.
+- `consts/messages.ts`: every error text (`messages.OFFLINE`, `messages.ERROR_TITLE`). Add new error text here, not inline.
+- `docs/api/README.md`: the response envelope. `docs/api/template.md`: copy it to start `docs/api/<feature>.md`.
 - `dayjs-nuxt` uses timezone `Asia/Bangkok`. Access it with `useDayjs()`.
 - `plugins/vuetify.ts` holds the Vuetify setup (mdi icons, custom light theme). `runtimeConfig.public` exposes `BUILD_DATE` and `APP_ENV`. `app.config.ts` holds the app name and version.

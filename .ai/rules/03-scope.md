@@ -12,7 +12,7 @@ Do what the task asks, and nothing more.
 ## Ask before you
 
 - Add, remove or upgrade a dependency, or change `package.json` scripts.
-- Edit shared core files: `nuxt.config.ts`, `app.config.ts`, `plugins/`, `configs/env.ts`, `utils/api.ts`, `data/networks/apiClient.ts`, `composables/useDialog.ts`, `composables/global.ts` or `consts/rules.ts`.
+- Edit shared core files: `nuxt.config.ts`, `app.config.ts`, `plugins/`, `configs/env.ts`, `core/api.ts`, `core/apiError.ts`, `data/networks/apiClient.ts`, `composables/useDialog.ts`, `composables/global.ts`, `utils/format.ts`, `consts/rules.ts` or `consts/messages.ts`.
 - Change the props, emits or slots of an existing `components/global/*` component, because every caller depends on them. Adding an optional prop with a default that keeps today's behavior is fine.
 - Delete or move files, or create a new top-level folder.
 - Add a new pattern or library the rules don't describe (a new state approach, HTTP client, UI kit, CSS framework and so on).

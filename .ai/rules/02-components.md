@@ -24,5 +24,5 @@ Follow these rules when you build or change UI in pages and components.
 
 - Pass data in through props and send actions out through emits (names start with `on`, see naming rules). Use slots for parts that differ between pages.
 - Shared components don't call stores, repositories or the API. The page does that and passes the result in as props. Feature components in `components/<feature>/` may read their feature's store when that keeps the page simpler.
-- Type props and emits with `defineProps<...>()` and `defineEmits<...>()`, using view types from `models/views`.
+- Type props and emits with `defineProps<...>()` and `defineEmits<...>()`, using entity types from `models/entities` (or form types from `models/forms` for form components).
 - Keep it small and focused on one job. Add a prop only when a real caller needs it, not for a possible future one.

@@ -5,9 +5,12 @@ Pinia stores live in `app/stores/` and are auto-imported.
 ## Structure
 
 - One store per feature: `stores/<feature>.ts` exporting `use<Feature>Store` (`stores/user.ts` → `useUserStore`). The store id is the feature name in camelCase (`defineStore("user", ...)`).
-- Use **setup stores** only: `defineStore("user", () => { ... })`. Not the options syntax (`state` / `getters` / `actions`).
-- Inside the store: state is `ref`, derived values are `computed`, and actions are plain functions. Return everything the pages need.
-- Type state with view types from `models/views` (`ref<UserView[]>([])`). Stores never hold request or response body types.
+- Use the **options syntax** only, like the [Example](#example) below: `defineStore("user", { state() { ... }, actions: { ... } })`. Not setup stores (`defineStore("user", () => { ... })`).
+- Inside the store:
+  - `state()` is a method that returns every state field with its initial value.
+  - Derived values go in `getters`, written as `(state) => ...` (`hasUserList: (state) => state.userList.length > 0`). Leave `getters` out when there are none.
+  - Actions go in `actions`, written as methods (`async fetchUserList(page: number) { ... }`), not arrow functions, so `this` is the store. Read and change state through `this` (`this.isLoading = true`).
+- Type state with entity types from `models/entities` (`userList: [] as User[]`). Actions that send data take form types from `models/forms` (`createUser(form: UserForm)`). Stores never hold request or response body types.
 
 ## Actions
 
@@ -17,7 +20,7 @@ Pinia stores live in `app/stores/` and are auto-imported.
 
 ## Loading flags
 
-- Every action that calls the API sets a loading flag in `try` / `finally`, so the flag resets even when the call fails:
+- Loading flags are state fields. Every action that calls the API sets one in `try` / `finally`, so the flag resets even when the call fails:
   - `isLoading` for loading data (`fetch...` actions).
   - `isSubmitting` for changing data (`create...`, `update...`, `delete...` actions).
 - If two loads of the same store can run at once and the page needs to tell them apart, use a specific flag (`isLoadingDetail`). Otherwise keep one flag.
@@ -26,6 +29,7 @@ Pinia stores live in `app/stores/` and are auto-imported.
 ## Persist
 
 - Don't add `persist` unless the task needs the data to survive a page reload (e.g. a session or user settings). Ask first.
+- When it's needed, add the `persist` option next to `state` (the plugin is registered in `plugins/pinia.ts`).
 - Never persist API lists, detail data or loading flags.
 
 ## Example
@@ -35,36 +39,42 @@ Pinia stores live in `app/stores/` and are auto-imported.
 import * as userRepository from "@/data/repositories/user";
 import { buildCreateUserBody } from "@/data/builders/user";
 import { mapUserList } from "@/data/mappers/user";
-import type { UserForm, UserView } from "@/models/views/user";
+import type { User } from "@/models/entities/user";
+import type { UserForm } from "@/models/forms/user";
 
-export const useUserStore = defineStore("user", () => {
-  const userList = ref<UserView[]>([]);
-  const totalPage = ref(0);
-  const isLoading = ref(false);
-  const isSubmitting = ref(false);
+export const useUserStore = defineStore("user", {
+  state() {
+    return {
+      userList: [] as User[],
+      totalPage: 0,
+      isLoading: false,
+      isSubmitting: false,
+    };
+  },
 
-  async function fetchUserList(page: number) {
-    isLoading.value = true;
-    try {
-      const { data } = await userRepository.fetchUserList(page);
-      userList.value = mapUserList(data.listData);
-      totalPage.value = data.pagination.totalPage;
-      return userList.value;
-    } finally {
-      isLoading.value = false;
-    }
-  }
+  actions: {
+    async fetchUserList(page: number) {
+      this.isLoading = true;
+      try {
+        const { data } = await userRepository.fetchUserList(page);
+        const userList = mapUserList(data); // response shape from models/responsebody/user.ts
+        this.userList = userList.items;
+        this.totalPage = userList.totalPage;
+        return this.userList;
+      } finally {
+        this.isLoading = false;
+      }
+    },
 
-  async function createUser(form: UserForm) {
-    isSubmitting.value = true;
-    try {
-      await userRepository.createUser(buildCreateUserBody(form));
-      return true;
-    } finally {
-      isSubmitting.value = false;
-    }
-  }
-
-  return { userList, totalPage, isLoading, isSubmitting, fetchUserList, createUser };
+    async createUser(form: UserForm) {
+      this.isSubmitting = true;
+      try {
+        await userRepository.createUser(buildCreateUserBody(form));
+        return true;
+      } finally {
+        this.isSubmitting = false;
+      }
+    },
+  },
 });
 ```
